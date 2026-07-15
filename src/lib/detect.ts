@@ -10,6 +10,19 @@ import { safeDecodeURIComponent } from '@/lib/url';
 const MAXMIND = 'maxmind';
 
 const PROVIDER_HEADERS = [
+  // hexacolab proxy headers (highest priority).
+  // hexacolab.com runs on Cloudflare Workers and proxies /a/* to this instance.
+  // Vercel's edge rewrites both cf-ipcountry and x-vercel-ip-* from the IP it
+  // sees, which on that hop is the Worker's egress (Tokyo/Hong Kong), not the
+  // visitor's -- verified by sending an explicit cf-ipcountry: KR from Seoul and
+  // having it recorded as JP/Tokyo. The proxy therefore forwards the visitor's
+  // Cloudflare-resolved geo under a name Vercel does not reserve, so Korean
+  // visitors stop being counted as JP/HK.
+  {
+    countryHeader: 'x-hexaco-country',
+    regionHeader: 'x-hexaco-region',
+    cityHeader: 'x-hexaco-city',
+  },
   // Cloudflare headers
   {
     countryHeader: 'cf-ipcountry',
