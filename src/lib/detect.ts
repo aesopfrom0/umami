@@ -10,16 +10,19 @@ import { safeDecodeURIComponent } from '@/lib/url';
 const MAXMIND = 'maxmind';
 
 const PROVIDER_HEADERS = [
-  // Umami custom headers (cloud mode only)
-  ...(process.env.CLOUD_MODE
-    ? [
-        {
-          countryHeader: 'x-umami-client-country',
-          regionHeader: 'x-umami-client-region',
-          cityHeader: 'x-umami-client-city',
-        },
-      ]
-    : []),
+  // Umami custom headers.
+  // FORK PATCH (aesopfrom0): upstream gates these behind CLOUD_MODE, but we are
+  // self-hosted so CLOUD_MODE must stay off (it hides the login page and switches
+  // auth/teams/billing into cloud-only paths). hexacolab.com runs on Cloudflare
+  // Workers and proxies /a/* here; Vercel's edge rewrites cf-ipcountry and
+  // x-vercel-ip-* from the Worker's egress IP (Tokyo/Hong Kong), so the proxy
+  // forwards the visitor's real geo under these unreserved header names. Keep this
+  // block unconditional across upstream rebases.
+  {
+    countryHeader: 'x-umami-client-country',
+    regionHeader: 'x-umami-client-region',
+    cityHeader: 'x-umami-client-city',
+  },
   // Cloudflare headers
   {
     countryHeader: 'cf-ipcountry',

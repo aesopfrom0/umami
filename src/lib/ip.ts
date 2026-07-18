@@ -1,7 +1,7 @@
 import ipaddr from 'ipaddr.js';
 
 export const IP_ADDRESS_HEADERS = [
-  ...(process.env.CLOUD_MODE ? ['x-umami-client-ip'] : []), // Umami custom header (cloud mode only)
+  'x-umami-client-ip', // FORK PATCH (aesopfrom0): upstream gates behind CLOUD_MODE; we are self-hosted (see detect.ts). Keep unconditional across rebases.
   'true-client-ip', // CDN
   'cf-connecting-ip', // Cloudflare
   'fastly-client-ip', // Fastly
