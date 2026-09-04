@@ -1,6 +1,7 @@
 # Test Convention
 
-Use Vitest for unit and component tests. Cypress remains the end-to-end test runner.
+Use Vitest for unit and component tests. Playwright is the end-to-end test runner
+(`playwright.config.ts`, specs in `tests/e2e/`, run with `pnpm test:e2e`).
 
 - Place tests next to the code they cover as `*.test.ts` or `*.test.tsx`.
 - Import Vitest APIs explicitly: `import { describe, expect, test, vi } from 'vitest';`.

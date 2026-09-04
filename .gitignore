@@ -39,6 +39,9 @@ pm2.yml
 .agents
 tmpclaude*
 CLAUDE.md
+# fork 예외: 이 리포의 에이전트 문서는 추적한다 (upstream은 기여자 설정 유입을 막으려
+# CLAUDE.md를 무시한다. 개인 fork라 PR을 보낼 일이 없으므로 예외를 둔다.)
+!CLAUDE.md
 nul
 
 # debug
@@ -52,3 +55,4 @@ yarn-error.log*
 *.env.*
 
 *.dev.yml
+.vercel
